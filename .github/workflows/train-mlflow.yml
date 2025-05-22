@@ -37,6 +37,10 @@ jobs:
 
       - name: Train model and log to MLflow
         run: |
+          echo "Exporting DagsHub credentials for MLflow..."
+          export MLFLOW_TRACKING_USERNAME=$(grep DAGSHUB_USERNAME .env | cut -d '=' -f2)
+          export MLFLOW_TRACKING_PASSWORD=$(grep DAGSHUB_TOKEN .env | cut -d '=' -f2)
+          export MLFLOW_TRACKING_URI=https://dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow
           python src/models/train_comptage_velo_MLflow.py
 
       - name: Install Docker Compose
