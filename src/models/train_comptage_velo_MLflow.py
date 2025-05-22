@@ -17,7 +17,7 @@ os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("DAGSHUB_TOKEN")
 
 # MLflow tracking sur DagsHub
 mlflow.set_tracking_uri(
-    f"https://{os.getenv('DAGSHUB_USERNAME')}:{os.getenv('DAGSHUB_TOKEN')}@dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow"
+    f"https://{os.getenv('DAGSHUB_USERNAME')}:{os.getenv('DAGSHUB_TOKEN')}@dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow")
 mlflow.set_experiment("modele_comptage_velo")
 
 # Charger les données encodées
