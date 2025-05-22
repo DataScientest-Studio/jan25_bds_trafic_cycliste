@@ -8,10 +8,10 @@ from pathlib import Path
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 # Charger les identifiants DagsHub depuis le fichier .env
-load_dotenv()
+load_dotenv(find_dotenv())
 os.environ["MLFLOW_TRACKING_USERNAME"] = os.getenv("DAGSHUB_USERNAME")
 os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("DAGSHUB_TOKEN")
 
