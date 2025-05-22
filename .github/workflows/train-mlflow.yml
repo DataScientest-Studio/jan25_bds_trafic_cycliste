@@ -32,8 +32,8 @@ jobs:
       - name: Exporter les identifiants DagsHub pour MLflow
         run: |
           echo "Exporting DagsHub credentials for MLflow..."
-          echo "MLFLOW_TRACKING_USERNAME=$DAGSHUB_USERNAME" >> $GITHUB_ENV
-          echo "MLFLOW_TRACKING_PASSWORD=$DAGSHUB_TOKEN" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_USERNAME=${{ env.DAGSHUB_USERNAME }}" >> $GITHUB_ENV
+          echo "MLFLOW_TRACKING_PASSWORD=${{ env.DAGSHUB_TOKEN }}" >> $GITHUB_ENV
 
       - name: Install DVC
         run: pip install dvc[http]
