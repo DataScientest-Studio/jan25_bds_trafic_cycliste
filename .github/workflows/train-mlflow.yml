@@ -42,7 +42,6 @@ jobs:
       - name: Pull data with DVC
         run: dvc pull -r dagshub_remote --verbose
 
-      
       - name: Train model and log to MLflow
         run: |
           python src/models/train_comptage_velo_MLflow.py
