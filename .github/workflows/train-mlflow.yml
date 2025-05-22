@@ -29,11 +29,11 @@ jobs:
           echo "Loading .env vars into GitHub Actions"
           cat .env >> $GITHUB_ENV
 
-      - name: Exporter les identifiants DagsHub pour MLflow
+      - name: Exporter les identifiants DagsHub pour MLflow (local au process)
         run: |
-          echo "Exporting DagsHub credentials for MLflow..."
-          echo "MLFLOW_TRACKING_USERNAME=${{ env.DAGSHUB_USERNAME }}" >> $GITHUB_ENV
-          echo "MLFLOW_TRACKING_PASSWORD=${{ env.DAGSHUB_TOKEN }}" >> $GITHUB_ENV
+          export MLFLOW_TRACKING_USERNAME=$DAGSHUB_USERNAME
+          export MLFLOW_TRACKING_PASSWORD=$DAGSHUB_TOKEN
+          echo "MLflow credentials exported"
 
       - name: Install DVC
         run: pip install dvc[http]
@@ -42,6 +42,9 @@ jobs:
         run: dvc pull -r dagshub_remote --verbose
 
       - name: Train model and log to MLflow
+        env:
+          MLFLOW_TRACKING_USERNAME: ${{ env.DAGSHUB_USERNAME }}
+          MLFLOW_TRACKING_PASSWORD: ${{ env.DAGSHUB_TOKEN }}
         run: |
           python src/models/train_comptage_velo_MLflow.py
 
