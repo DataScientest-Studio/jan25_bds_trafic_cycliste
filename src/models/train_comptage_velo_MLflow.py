@@ -8,16 +8,16 @@ from pathlib import Path
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-from dotenv import load_dotenv, find_dotenv
+from dotenv import load_dotenv
 
 # Charger les identifiants DagsHub depuis le fichier .env
-load_dotenv(find_dotenv())
-os.environ["MLFLOW_TRACKING_USERNAME"] = os.getenv("DAGSHUB_USERNAME")
-os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("DAGSHUB_TOKEN")
+load_dotenv()
+os.environ["MLFLOW_TRACKING_USERNAME"] = os.getenv("MLFLOW_TRACKING_USERNAME")
+os.environ["MLFLOW_TRACKING_PASSWORD"] = os.getenv("MLFLOW_TRACKING_PASSWORD")
 
 # MLflow tracking sur DagsHub
 mlflow.set_tracking_uri(
-    f"https://{os.getenv('DAGSHUB_USERNAME')}:{os.getenv('DAGSHUB_TOKEN')}@dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow")
+    f"https://{os.getenv('MLFLOW_TRACKING_USERNAME')}:{os.getenv('MLFLOW_TRACKING_PASSWORD')}@dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow")
 mlflow.set_experiment("modele_comptage_velo")
 
 # Charger les données encodées
