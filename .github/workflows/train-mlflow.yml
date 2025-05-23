@@ -24,20 +24,26 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install DVC
+        run: pip install dvc[http]
+
+      - name: Configure DVC remote (read-only)
+        run: |
+          dvc remote modify dagshub_remote --local auth basic
+          dvc remote modify dagshub_remote --local user KevinL-tech
+          dvc remote modify dagshub_remote --local password 65846299a5076add6bf87a72a1b652158208e728
+
+      - name: Pull data and .env with DVC
+        run: |
+          dvc pull -r dagshub_remote --verbose
+
       - name: Load environment variables from .env
         run: |
           echo "Chargement des variables d'environnement depuis .env"
           grep -v '^#' .env >> $GITHUB_ENV
 
       - name: Set MLflow Tracking URI
-        run: |
-          echo "MLFLOW_TRACKING_URI=https://dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow" >> $GITHUB_ENV
-
-      - name: Install DVC
-        run: pip install dvc[http]
-
-      - name: Pull data with DVC
-        run: dvc pull -r dagshub_remote --verbose
+        run: echo "MLFLOW_TRACKING_URI=https://dagshub.com/KevinL-tech/jan25_bds_trafic_cycliste.mlflow" >> $GITHUB_ENV
 
       - name: Train model and log to MLflow
         run: python src/models/train_comptage_velo_MLflow.py
